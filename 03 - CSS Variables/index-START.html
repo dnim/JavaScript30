@@ -21,6 +21,26 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+     
+    /*
+     double dash defines variables 
+     more info here: https://drafts.csswg.org/css-variables/
+    */
+    :root {
+      --base: yellow;
+      --spacing: 10px;
+      --blur: 5px;
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,6 +65,18 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdates() {
+      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
+      const sufix = this.dataset.sizing || '';
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + sufix);
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdates));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdates));
+
   </script>
 
 </body>
